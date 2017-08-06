@@ -76,6 +76,33 @@
   </body>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 	<script>
+		var app = angular.module('quoteApp', []);
+
+			app.controller('appController', function($scope,$http) {
+
+				$scope.quoteData = [];
+				$scope.holdOn = true;
+				// var baseUrl = "http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1";
+				var baseUrl = 'http://quotes.stormconsultancy.co.uk/random.json';
+
+				// Simple GET Request:
+				$scope.getQuotes = function () {
+					$scope.holdOn = true;
+					$http({
+						cache: false,
+						method: 'GET',
+						url: baseUrl,
+					}).then(function successCallback(response) {
+						$scope.quoteData = response.data;
+						$scope.holdOn = false;
+					}, function errorCallback(response) {
+					});
+				}
+
+				$scope.getQuotes();
+
+		});
+	</script>
 </html>
 
 
